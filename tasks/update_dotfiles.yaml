@@ -1,8 +1,4 @@
 ---
-- name: 'Set a fact for the local path to the public key to register with GitHub.'
-  ansible.builtin.set_fact:
-    github_ssh_key_path: "{{ ansible_env.HOME }}/.ssh/{{ github_ssh_key_name }}"
-
 - name: 'Ensure dotfiles repository is cloned locally.'
   ansible.builtin.git:
     repo: "{{ dotfiles_repo }}"
@@ -11,3 +7,8 @@
     accept_hostkey: yes
     ssh_opts: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o HashKnownHosts=no'
     force: yes
+
+- name: 'Install Dotfiles.'
+  ansible.builtin.command:
+    cmd: './install'
+    chdir: "{{ dotfiles_destination }}"

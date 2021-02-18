@@ -1,0 +1,6 @@
+---
+- name: 'Install the Ansible-Pull Cronjob'
+  ansible.builtin.cron:
+    name: 'update-dotfiles'
+    minute: '0'
+    job: ". {{ ansible_env.HOME }}/.profile; pushd {{ dotfiles_destination }} > /dev/null; ./install;"
